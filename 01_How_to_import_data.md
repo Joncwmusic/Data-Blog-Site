@@ -24,9 +24,29 @@ With enough time, energy, effort, and caffiene almost anything is possible. Now 
 
 ### Public Datasets
 
-Public Datasets are easy to work with. You just need a direct url to the dataset and there are several sites whose sole purpose is to give people data. 
+Public Datasets are easy to work with. You just need a direct url to the dataset and there are several sites whose sole purpose is to give people data. That's great for you, the newly inspired overachiever. It gives you a way to get your reps in and all you have to do is copy paste like the majority of your career has been and still will be, even as you copy paste from the LLM you used for your last report.
+
+Data.gov is great to get you started
+
+```
+# Python Code:
+import pandas as pd
+
+dataset_url_gov = 'https://data.ny.gov/api/views/e2u6-bmnn/rows.csv'
+
+gov_df = pd.read_csv(dataset_url_gov)
+gov_df.head()
+```
+And now you have data that you can analyse to your hearts content.
 
 ### Web Scraping
+
+Web scraping is a little harder to get clean data from but it's better than nothing if you're in a pinch. You can take tables directly from sites, or grab the same piece of info from different webpages. Sometimes you'll even find a juicy json file with a ton of metadata. Really, it depends on the site and your patience.
+
+Let's go through a couple basic examples.
+
+Maybe a table from Wikipedia.
+
 ### API
 ### Spreadsheets
 ### Query from a Database
