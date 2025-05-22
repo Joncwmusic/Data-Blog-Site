@@ -1,3 +1,3 @@
 # Data-Blog-Site
 
-- [Getting Data into your Python Project](./path-to-post-1)
+- [Getting Data into your Python Project](./01_How_to_import_data.md)
