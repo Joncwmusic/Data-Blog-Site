@@ -1,6 +1,6 @@
 # How to import data sources with python
 
-So you've survived another round of layoffs at the big tech company you've been cruising it. 
+So you've survived another round of layoffs at the big tech company you've been cruising at the bare minimum for a while now. 
 Instead of improving your skils or working on your fundamentals, you decided to watch videos about improving your skills trying to muster the motivation to change. 
 You're doing great. Except, you're KPIs put you in the 89th percentile of staff and the bottom 10% were just given opportunities that aren't within the company. Ouch.
 Now you have to get yourself back to at least the middle of the pack so upper management doesn't catch on to how much you've been slacking.
