@@ -2,15 +2,19 @@
 
 So you've survived another round of layoffs at the big tech company you've been cruising at the bare minimum for a while now. 
 Instead of improving your skils or working on your fundamentals, you decided to watch videos about improving your skills trying to muster the motivation to change. 
-You're doing great. Except, you're KPIs put you in the 89th percentile of staff and the bottom 10% were just given opportunities that aren't within the company. Ouch.
+You're doing great. Except, you're KPIs put you in the 89th percentile of staff and the bottom 10% were just given opportunities that aren't within the company.
+
+Ouch.
+
 Now you have to get yourself back to at least the middle of the pack so upper management doesn't catch on to how much you've been slacking.
 Your first task is to just get some preliminary data. Your boss doesn't know anything about the data on your internal servers, cloud storage, or even the data in the csvs he has saved locally.
 He thinks API means Asian/Pacific Islander because he spent 5 years in HR before becoming a tech hiring manager and eventually, your direct report.
-
+He now makes triple what you make, but you're still the one on the chopping block for having the least number of queries per hour on the server. Because that's a valid way to measure performance *that was sarcasm*
 
 ## Learning Goals
 
-The goal is simply to lay out the basic options you have to gather data so you can analyse and predict to your hearts content so you're boss can give you high marks on your performance review.
+The goal is simply to lay out the basic options you have to gather data so you can analyse and predict to your hearts content. That way your boss can give you high marks on your performance review that still mean absolutely nothing.
+
 You'll learn how to:
 
 - Import data from public datasets online
@@ -24,7 +28,7 @@ With enough time, energy, effort, and caffiene almost anything is possible. Now 
 
 ### Public Datasets
 
-Public Datasets are easy to work with. You just need a direct url to the dataset and there are several sites whose sole purpose is to give people data. That's great for you, the newly inspired overachiever. It gives you a way to get your reps in and all you have to do is copy paste like the majority of your career has been and still will be, even as you copy paste from the LLM you used for your last report.
+Public Datasets are easy to work with. You just need a direct url to the dataset and there are several sites whose sole purpose is to give people data. That's great for you, the newly inspired overachiever that's still underachieving. It gives you a way to get your reps in and all you have to do is copy paste like the majority of your career has been so far and will continue to be, even as you copy paste from the LLM you used for your last report.
 
 Data.gov is great to get you started
 
@@ -45,10 +49,61 @@ Web scraping is a little harder to get clean data from but it's better than noth
 
 Let's go through a couple basic examples.
 
-Maybe a table from Wikipedia.
+```
+# Python Code
+import requests
+from bs4 import BeautifulSoup
+
+url = "https://www.imdb.com/chart/top"
+soup = BeautifulSoup(requests.get(url).text, "html.parser")
+titles = [tag.text for tag in soup.select(".titleColumn a")][:5]
+titles
+```
 
 ### API
+
+Okay so API stands for application programming interface. It's an interface for your code to work with an application programmatically... let me explain.
+Let's say you want to upload videos to a YouTube Channel. But hitting the upload button is just too much work for your overworked fingers that have been typing out that really long reddit thread while you were distracted. You can write a program with your exhausted fingers to do that. But instead of trying to mimic the behavior of a user using a web driver, you can instead use the *Application Programming Interface* that YouTube provides to do it automagically. (If you're actually curious here's a link: https://developers.google.com/youtube/v3/guides/uploading_a_video).
+
+APIs are useful for automating things but only if the application HAS an API to begin with (Ideally with public documentation). Otherwise you'll have to default to scraping the old fashioned way.
+
+Let's way through this step by step:
+
+- Step one: is to determine what data you want
+- Step two: is to tell yourself you can do this even if your title isn't data engineer
+- Step three: is to stare at the documentation to discover you CAN get that information with their API (otherwise go back to step 1)
+- Step four: request the data with the url string provided by the documentation
+- Step five: Convert the data (usually json) into a usable format
+- Bonus Step: Create an analysis that will impress your manager so he can posture to his manager
+
+That last step is how you actually keep your job
+
+```
+# Python Code
+
+```
+
 ### Spreadsheets
+
+
+```
+# Python Code
+
+```
+
 ### Query from a Database
+
+```
+# Python Code
+
+```
+
 ### Google Cloud
+You could use any cloud service to get data but the one I'm most familiar with is google cloud and particularly bigquery. This is virtually the same as querying from a database with the key difference being that the database is hosted on a cloud server instead of locally.
+
+```
+# Python Code
+
+```
+
 ### Make Your Own (Bonus Tip) 
