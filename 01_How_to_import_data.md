@@ -45,7 +45,7 @@ And now you have data that you can analyse to your hearts content.
 
 ### Web Scraping
 
-Web scraping is a little harder to get clean data from but it's better than nothing if you're in a pinch. You can take tables directly from sites, or grab the same piece of info from different webpages. Sometimes you'll even find a juicy json file with a ton of metadata. Really, it depends on the site and your patience.
+Web scraping can be very messy but could also be the way you collect some insightful info when you don't have direct access to a site's data in a nice downloadable format or with an API. You can take tables directly from sites, or grab the same piece of info from different webpages. Sometimes you'll even find a juicy json file with a ton of metadata. Really, it depends on the site and your patience. It's honestly perfect for some competitive intelligence gathering if you know exactly what you're looking for.
 
 Let's go through a couple basic examples.
 
@@ -59,6 +59,8 @@ soup = BeautifulSoup(requests.get(url).text, "html.parser")
 titles = [tag.text for tag in soup.select(".titleColumn a")][:5]
 titles
 ```
+
+this code block goes to the top imdb movies and gets their titles.
 
 ### API
 
