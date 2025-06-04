@@ -1,4 +1,4 @@
-# How to import data sources with python
+# How to Import Data Sources with Python
 
 So you've survived another round of layoffs at the big tech company you've been cruising at the bare minimum for a while now. 
 Instead of improving your skils or working on your fundamentals, you decided to watch videos about improving your skills trying to muster the motivation to change. 
