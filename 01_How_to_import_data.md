@@ -161,8 +161,34 @@ df.head()
 You could use any cloud service to get data but the one I'm most familiar with is google cloud and particularly bigquery. This is virtually the same as querying from a database with the key difference being that the database is hosted on a cloud server instead of locally.
 
 ```python
-# Python Code
+#Python Code
+
+from google.colab import auth
+from google.cloud import bigquery
+import pandas as pd
+
+# Authenticate user (works in Colab)
+auth.authenticate_user()
+
+# Initialize client
+client = bigquery.Client(project="bigquery-public-data")
+
+# Query a public dataset
+query = """
+    SELECT name, SUM(number) as total
+    FROM `bigquery-public-data.usa_names.usa_1910_2013`
+    WHERE state = 'TX'
+    GROUP BY name
+    ORDER BY total DESC
+    LIMIT 5
+"""
+
+# Run query and convert to DataFrame
+df = client.query(query).to_dataframe()
+df
 
 ```
 
-### Make Your Own (Bonus Tip) 
+### Make Your Own (Bonus Tip)
+
+If you're really pressed for finding data because you're manager is hounding you for data, you may be able to get away with simulating it, Monte Carlo Style. If you've ever heard the phrase monte carlo simulation, don't be scared. Monte Carlo simulations can be thought of performing a simple process
