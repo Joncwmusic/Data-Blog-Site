@@ -112,23 +112,55 @@ Of course everything up to this point is just to get the client to request the d
 
 ### Spreadsheets
 
+If you're in this section you either work for a company worn down by the prehistoric hellscape of using excel working under a manager who says VBA is everything you need. Or you work in consulting trying to transition these dinosaurs to the modern day. Either way, you're paying the price for someone else's sin and you have to add another layer to the convoluted engineering pipeline.
 
-```
+No matter how you got here, you can still find some programmatic ways to deal with importing your excel data into a python script so you can mangle it into something that will go into a proper database (that will once again be exported into an excel document to make a chart to go into a powerpoint).
+
+Let's get into our example:
+
+Suppose you have an excel file "WorkHours.csv" and you wanna use this excel document to prove to your manager you're being underpaid for all the billable time you're putting in.
+
+```python
 # Python Code
+import pandas as pd
+
+# Load a CSV file
+csv_df = pd.read_csv("path/to/your_file.csv")
+
+# Load an Excel file (first sheet by default)
+excel_df = pd.read_excel("path/to/your_file.xlsx")
+
+# Load a public Google Sheet
+sheet_url = "https://docs.google.com/spreadsheets/d/your_sheet_id_here/export?format=csv"
+gsheet_df = pd.read_csv(sheet_url)
+
+# Display heads to verify
+print("CSV Data:\n", csv_df.head(), "\n")
+print("Excel Data:\n", excel_df.head(), "\n")
+print("Google Sheet Data:\n", gsheet_df.head())
 
 ```
 
 ### Query from a Database
 
-```
+```python
 # Python Code
 
+import sqlite3
+import pandas as pd
+
+# Step 2: Connect to the database
+conn = sqlite3.connect("sample_users.db")
+
+# Step 3: Query the database
+df = pd.read_sql("SELECT * FROM users", conn)
+df.head()
 ```
 
 ### Google Cloud
 You could use any cloud service to get data but the one I'm most familiar with is google cloud and particularly bigquery. This is virtually the same as querying from a database with the key difference being that the database is hosted on a cloud server instead of locally.
 
-```
+```python
 # Python Code
 
 ```
