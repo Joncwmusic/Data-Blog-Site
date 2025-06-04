@@ -32,7 +32,7 @@ Public Datasets are easy to work with. You just need a direct url to the dataset
 
 Data.gov is great to get you started
 
-```
+```python
 # Python Code:
 import pandas as pd
 
@@ -45,18 +45,18 @@ And now you have data that you can analyse to your hearts content.
 
 ### Web Scraping
 
-Web scraping can be very messy but could also be the way you collect some insightful info when you don't have direct access to a site's data in a nice downloadable format or with an API. You can take tables directly from sites, or grab the same piece of info from different webpages. Sometimes you'll even find a juicy json file with a ton of metadata. Really, it depends on the site and your patience. It's honestly perfect for some competitive intelligence gathering if you know exactly what you're looking for.
+Web scraping can be very messy but could also be the way you collect some insightful info when you don't have direct access to a site's data in a nice downloadable format or with an API. You can take tables directly from sites, or grab the same piece of info from different webpages. Sometimes you'll even find a meaty `JSON` file with a ton of metadata. Really, it depends on the site and your patience. It's honestly perfect for some competitive intelligence gathering if you know exactly what you're looking for.
 
 Let's go through a couple basic examples.
 
-```
+```python
 # Python Code
 import requests
 from bs4 import BeautifulSoup
 
 url = "https://www.imdb.com/chart/top"
 soup = BeautifulSoup(requests.get(url).text, "html.parser")
-titles = [tag.text for tag in soup.select(".titleColumn a")][:5]
+titles = [tag.text for tag in soup.select(".titleColumn a")]
 titles
 ```
 
@@ -65,7 +65,7 @@ this code block goes to the top imdb movies and gets their titles.
 ### API
 
 Okay so API stands for application programming interface. It's an interface for your code to work with an application programmatically... let me explain.
-Let's say you want to upload videos to a YouTube Channel. But hitting the upload button is just too much work for your overworked fingers that have been typing out that really long reddit thread while you were distracted. You can write a program with your exhausted fingers to do that. But instead of trying to mimic the behavior of a user using a web driver, you can instead use the *Application Programming Interface* that YouTube provides to do it automagically. (If you're actually curious here's a link: https://developers.google.com/youtube/v3/guides/uploading_a_video).
+Let's say you want to upload videos to a YouTube Channel. But hitting the upload button is just too much work for your overworked fingers that have been typing out that really long reddit thread while you were distracted. You can write a program with your exhausted fingers to do that. But instead of trying to mimic the behavior of a user using a web driver, you can instead use the *Application Programming Interface* that YouTube provides to do it automagically. (If you're actually curious here's a link: [Uploading a YouTube Video via API tutorial](https://developers.google.com/youtube/v3/guides/uploading_a_video).
 
 APIs are useful for automating things but only if the application HAS an API to begin with (Ideally with public documentation). Otherwise you'll have to default to scraping the old fashioned way.
 
@@ -75,15 +75,40 @@ Let's way through this step by step:
 - Step two: is to tell yourself you can do this even if your title isn't data engineer
 - Step three: is to stare at the documentation to discover you CAN get that information with their API (otherwise go back to step 1)
 - Step four: request the data with the url string provided by the documentation
-- Step five: Convert the data (usually json) into a usable format
+- Step five: Convert the data (usually `JSON`) into a usable format
 - Bonus Step: Create an analysis that will impress your manager so he can posture to his manager
 
-That last step is how you actually keep your job
+That last step is how you actually *keep* your job. But let's look at some code
 
-```
+```python
 # Python Code
 
+ALPHA_VANTAGE_API_KEY = "demo"
+import requests
+
+# You will have to get an API key from alpha vantage directly
+url = f"https://www.alphavantage.co/query"
+params = {
+        "function": "TIME_SERIES_DAILY",
+        "symbol": "IBM",
+        "apikey": ALPHA_VANTAGE_API_KEY
+    }
+response = requests.get(url, params=params)
+data = response.json()
 ```
+You'll notice the API request is based on three components:
+
+**1 - The Endpoint**
+
+The endpoint is the URL that your application uses to access the data on the server side. In our case we're using alphavantage's API and their query endpoint
+
+**2 - The Parameters**
+
+The parameters are the extra information the server needs to deliver the specific data the client is requesting. In this case the client is asking for daily time series data for the stock with ticker IBM. Notice there's also this parameter *apikey* which is a key given to you by alpha vantage to actually access their endpoint. Do not share these with anyone unless you're not the one footing the bill on rate limits. Then go nuts.
+
+**3 - The Response**
+
+Of course everything up to this point is just to get the client to request the data. The response is what will have the data. And you'll need to put that somewhere. Usually the response comes in a nice `JSON` file and then you can clean it up, put it into a DB or dataframe, and then wait 3 months for everything to crash because the `JSON` formatting changed all of the sudden with new API changes. The data may also come in XML or text formatting so your results may vary.
 
 ### Spreadsheets
 
