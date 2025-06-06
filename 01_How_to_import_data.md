@@ -1,4 +1,4 @@
-# How to Import Data Sources with Python
+# How to Import Data Sources Into Your Project
 
 So you've survived another round of layoffs at the big tech company you've been cruising at the bare minimum for a while now. 
 Instead of improving your skils or working on your fundamentals, you decided to watch videos about improving your skills trying to muster the motivation to change. 
@@ -158,7 +158,7 @@ df.head()
 ```
 
 ### Google Cloud
-You could use any cloud service to get data but the one I'm most familiar with is google cloud and particularly bigquery. This is virtually the same as querying from a database with the key difference being that the database is hosted on a cloud server instead of locally.
+You could use any cloud service to get data but the one I'm personally most familiar with is google's cloud services and particularly bigquery. This is virtually the same as querying from a database with the key difference being that the database is hosted on a cloud server instead of locally.
 
 ```python
 #Python Code
@@ -191,4 +191,5 @@ df
 
 ### Make Your Own (Bonus Tip)
 
-If you're really pressed for finding data because you're manager is hounding you for data, you may be able to get away with simulating it, Monte Carlo Style. If you've ever heard the phrase monte carlo simulation, don't be scared. Monte Carlo simulations can be thought of performing a simple process
+If you're really pressed for finding data because you're manager is hounding you for data, you may be able to get away with simulating it, Monte Carlo Style. If you've ever heard the phrase monte carlo simulation, don't be scared. Monte Carlo simulations can be thought of performing a simple process with random variance. Think of a trend that's directionally accurate, add some noise or jitter to add some extra spice. Do some stress testing on said data. And hand that into your manager with the same enthusiasm VC startups have when they say they can corner 1% of a 5 trillion dollar market in 18 months with 20 engineers and 3 studio apartments.
+
