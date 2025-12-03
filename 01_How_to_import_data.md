@@ -201,6 +201,8 @@ df
 If you're really pressed for finding data because you're manager is hounding you for data, you may be able to get away with simulating it, Monte Carlo Style. If you've ever heard the phrase monte carlo simulation, don't be scared. Monte Carlo simulations can be thought of performing a simple process with random variance. Think of a trend that's directionally accurate, add some noise or jitter to add some extra spice. Do some stress testing on said data. And hand that into your manager with the same enthusiasm VC startups have when they say they can corner 1% of a 5 trillion dollar market in 18 months with 20 engineers and 3 studio apartments.
 
 ```Python
+#Python Code
+
 import pandas as pd
 import numpy as np
 
