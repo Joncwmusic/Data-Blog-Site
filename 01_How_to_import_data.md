@@ -200,6 +200,31 @@ df
 
 If you're really pressed for finding data because you're manager is hounding you for data, you may be able to get away with simulating it, Monte Carlo Style. If you've ever heard the phrase monte carlo simulation, don't be scared. Monte Carlo simulations can be thought of performing a simple process with random variance. Think of a trend that's directionally accurate, add some noise or jitter to add some extra spice. Do some stress testing on said data. And hand that into your manager with the same enthusiasm VC startups have when they say they can corner 1% of a 5 trillion dollar market in 18 months with 20 engineers and 3 studio apartments.
 
+```Python
+import pandas as pd
+import numpy as np
+
+# ---- PARAMETERS ----       
+trend_slope = 0.5
+noise_level = 5
+
+# ---- GENERATE BASE DATA ----
+np.random.seed()
+dates = pd.date_range(start="2024-01-01", periods=180, freq="D")
+
+# Linear trend: starts at random base, increases over time
+base_value = np.random.randint(50, 100)
+trend = base_value + trend_slope * np.arange(180)
+
+# Add random noise (jitter)
+noise = np.random.normal(0, 5, 180)
+values = trend + noise
+
+# ---- CREATE DATAFRAME ----
+df = pd.DataFrame({"date": dates,"value": values})
+df
+```
+
 ## Conclusion
 
 Your milage may vary in being able to make your boss happy. But, at the very least you have a place to start so you can get some preliminary analysis done. You still know how to analyze the data, right? Maybe 89th percentile is right where you belong.
