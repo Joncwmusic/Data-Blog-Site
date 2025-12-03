@@ -146,16 +146,20 @@ print("Google Sheet Data:\n", gsheet_df.head())
 
 ### Query from a Database
 
+Okay so this requires you actually have a database with data. You can store a small bit of data locally but for larger enterprise datasets with hundreds, if not thousands, of tables those will typically be stored in external servers or cloud environments. This means you'll have to pay attention to your cloud tutorials and do a lot of googling to connect your python script to the databse which may involve communicating with your db admin... I'm sure he's a fun guy.
+
+The basic process is two steps: Connect, then query. You'll generally have to send a query string concatenated with a whole load of parameters to get what you want into your precious pandas dataframe. And the code will typically look something like this.
+
 ```python
 # Python Code
 
 import sqlite3
 import pandas as pd
 
-# Step 2: Connect to the database
+# Step 1: Connect to the database
 conn = sqlite3.connect("sample_users.db")
 
-# Step 3: Query the database
+# Step 2: Query the database
 df = pd.read_sql("SELECT * FROM users", conn)
 df.head()
 ```
