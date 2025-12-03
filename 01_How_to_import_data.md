@@ -1,19 +1,22 @@
 # How to Import Data Sources Into Your Project
 
-So you've survived another round of layoffs at the big tech company you've been cruising at the bare minimum for a while now. 
-Instead of improving your skils or working on your fundamentals, you decided to watch videos about improving your skills trying to muster the motivation to change. 
-You're doing great. Except, you're KPIs put you in the 89th percentile of staff and the bottom 10% were just given opportunities that aren't within the company.
+So you've survived another round of layoffs at the big tech company and you've been cruising at the bare minimum for a while now. 
+Instead of improving your skils or working on your fundamentals, you decided to watch videos about improving your skills trying to muster the motivation to change.
+
+You're doing great.
+
+Except, you're KPIs put you in the 89th percentile of staff and the bottom 10% were just given opportunities that aren't within the company.
 
 Ouch.
 
 Now you have to get yourself back to at least the middle of the pack so upper management doesn't catch on to how much you've been slacking.
 Your first task is to just get some preliminary data. Your boss doesn't know anything about the data on your internal servers, cloud storage, or even the data in the csvs he has saved locally.
 He thinks API means Asian/Pacific Islander because he spent 5 years in HR before becoming a tech hiring manager and eventually, your direct report.
-He now makes triple what you make, but you're still the one on the chopping block for having the least number of queries per hour on the server. Because that's a valid way to measure performance *that was sarcasm*
+He now makes triple what you make, but you're still the one on the chopping block for having the least number of queries per hour on the server. Because that's a valid way to measure performance *(that was sarcasm)*
 
 ## Learning Goals
 
-The goal is simply to lay out the basic options you have to gather data so you can analyse and predict to your hearts content. That way your boss can give you high marks on your performance review that still mean absolutely nothing.
+The goal is simply to lay out the basic options you have to gather data so you can analyze and predict to your hearts content. That way your boss can give you high marks on your performance review that still mean absolutely nothing.
 
 You'll learn how to:
 
@@ -69,7 +72,7 @@ Let's say you want to upload videos to a YouTube Channel. But hitting the upload
 
 APIs are useful for automating things but only if the application HAS an API to begin with (Ideally with public documentation). Otherwise you'll have to default to scraping the old fashioned way.
 
-Let's way through this step by step:
+Let's go through this step by step:
 
 - Step one: is to determine what data you want
 - Step two: is to tell yourself you can do this even if your title isn't data engineer
@@ -193,3 +196,6 @@ df
 
 If you're really pressed for finding data because you're manager is hounding you for data, you may be able to get away with simulating it, Monte Carlo Style. If you've ever heard the phrase monte carlo simulation, don't be scared. Monte Carlo simulations can be thought of performing a simple process with random variance. Think of a trend that's directionally accurate, add some noise or jitter to add some extra spice. Do some stress testing on said data. And hand that into your manager with the same enthusiasm VC startups have when they say they can corner 1% of a 5 trillion dollar market in 18 months with 20 engineers and 3 studio apartments.
 
+## Conclusion
+
+Your milage may vary in being able to make your boss happy. But, at the very least you have a place to start so you can get some preliminary analysis done. You still know how to analyze the data, right? Maybe 89th percentile is right where you belong.
