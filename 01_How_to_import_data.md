@@ -1,5 +1,7 @@
 # How to Import Data Sources Into Your Project
 
+[Home](https://joncwmusic.github.io/Data-Blog-Site/)
+
 So you've survived another round of layoffs at the big tech company and you've been cruising at the bare minimum for a while now. 
 Instead of improving your skills or working on your fundamentals, you decided to watch videos about improving your skills trying to muster the motivation to change.
 
@@ -230,3 +232,5 @@ df
 ## Conclusion
 
 Your milage may vary in being able to make your boss happy. But, at the very least you have a place to start so you can get some preliminary analysis done. You still know how to analyze the data, right? Maybe 89th percentile is right where you belong.
+
+[Back to Home](https://joncwmusic.github.io/Data-Blog-Site/)
