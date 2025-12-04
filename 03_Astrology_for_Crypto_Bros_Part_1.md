@@ -1,5 +1,7 @@
 # Building a Dashboard for Crypto Bros (Part 1)
 
+[Home](https://joncwmusic.github.io/Data-Blog-Site/)
+
 So, as you may know crypto currency, web 3.0, and NFTs have been circulating in the mainstream for quite a while 
 as the last hope for the everyday person to accumulate riches on the level of the wealthiest individuals in the world. 
 And while it may be weird that the cashier at best buy has a really strong opinion about monetary policy and centralized currency 
@@ -136,6 +138,8 @@ df.to_sql(table_name, conn, if_exists="replace", index=False)
 # Close the connection
 conn.close()
 ```
+
+[Back to Home](https://joncwmusic.github.io/Data-Blog-Site/)
 
 
 
