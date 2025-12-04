@@ -10,7 +10,7 @@ And to that end I’m going to join the tokenized hype in the least active way p
 
 To be clear:
 
-**I am not a credentialed expert in finance. I know nothing about to create blockchain tokens, meme coins, or cryptocurrencies.
+**I am not a credentialed expert in finance. I know nothing about how to create blockchain tokens, meme coins, or cryptocurrencies.
 This is a project for exploration and learning, not a serious attempt at an in depth analysis.**
 
 ## The Project
@@ -45,7 +45,7 @@ In fact, there are several ways to get that data without leaving your chair and 
 In this project, I used coingecko as it was free. Feel free to peruse their documentation here if you’re crazy enough to try gambling on meme coins 
 https://docs.coingecko.com/
 
-```Python
+```python
 # Python Code
 
 # import Libraries
@@ -109,13 +109,13 @@ Find that here: https://www.alphavantage.co/documentation/
 
 So now the data lives in a dataframe in our application but if we don't want to keep the garbage collector busy, we might want to put this data somewhere.
 
-## Storing data
+## Storing data (Locally)
 
 So if you're going to store this, I don't recommend saving or exporting your dataframes to csv's and permanently reliquishing your data to comma seperated data engineering hell. Instead, you should probably set up a local sqlite instance (you can also use this to cache your data so you don't need to make as many requests to the coingecko API especially if you're calling it for several different tokens).
 
 Here's a script to store the dataframe into a sqlite database:
 
-```Python
+```python
 # Python code
 
 import pandas as pd
@@ -138,6 +138,140 @@ df.to_sql(table_name, conn, if_exists="replace", index=False)
 # Close the connection
 conn.close()
 ```
+
+## Storing Data (BigQuery)
+
+Okay maybe you're good on toy projects and instead want to a bit more enterprising.
+Something like a big data, cloud based solution for storage and downstream analytics.
+You have a couple options from using S3 or redshift through AWS, or hosting a SQLServer instance through microsoft or even google.
+For this project, I used BigQuery because that's what I'm familiar with and honestly for a project at this scale the choice is up to you.
+
+When using BigQuery you need to make sure that your application (the scripts you're writing) has permissions to upload and edit tables in bigquery.
+You accomplish this by adding a service account which is like user permission but for the application you're making.
+You then use the credentials from the service account to let google know your application can safely ruin your data infrastructure.
+
+Luckily python already has libraries dedicated to connecting to your cloud based project and shooting up your dataframes into the internet ether.
+I made a couple of functions along with the upload for some sanity checks starting with a function called "table_exists".
+
+
+```python
+# Python Code
+
+from dotenv import load_dotenv
+from google.cloud import bigquery as bq
+import os
+
+# environment variable should be stored in .env
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "filepath/google_credential_proejct_file.json"
+load_dotenv()
+
+# check if the table even exists. Useful for uploading and determining insert logic.
+def table_exists(table_id):
+    client = bq.Client()
+    try:
+        client.get_table(table_id)
+        print('Found table', table_id)
+        return True
+    except AttributeError as e:
+        print('Unable to find table with table_id: ' , table_id)
+        return False
+```
+
+Another useful function to have if you're going to upload directly to bigQuery is something like a get_num_rows function.
+Calling this before and after an upload will give you an idea of how much data was imported or more importantly,
+no change would signal nothing probably happened and there may be a bug you have to search for.
+
+```python
+# Python Code
+
+# send a query to ge the number of rows from a table.
+def get_num_rows(table_id, where_clause = '1=1'):
+    client = bq.Client()
+    query  = f"""
+    SELECT COUNT(1) AS num_rows FROM `{table_id}` WHERE {where_clause}
+    """
+    val = client.query(query).to_dataframe()
+    return val.iloc[0][0]
+```
+
+Now let's get into the meat and potatoes of the upload. The upload itself is effectively a big BigQuery query to send a dataframe up as a temp table, and then send a query to merge, append, or replace the new table with the temp table.
+
+In code:
+
+```python
+# Python Code
+
+# select the dataframe from your project, set the mode which is defaulted to append, and determine merge keys for when mode=merge
+def upload_to_bigquery(df, table_id, mode = "append", merge_keys = None):
+    table_exists(table_id)
+    client = bq.Client()
+
+    # catch when mode is invalid
+    if mode not in {"append", "replace", "create", "merge"}:
+        raise ValueError("Invalid mode. Use one of: append, replace, create, merge")
+
+    # case when the table doesn't exist and needs to be created
+    if mode == "create" and not table_exists(table_id):
+        job = client.load_table_from_dataframe(df, table_id, job_config=bq.LoadJobConfig(autodetect=True))
+        job.result()
+        print(f"Created and loaded table {table_id} with {len(df)} rows.")
+        return
+
+    # case when the table exists and just needs the extra data
+    if mode == "append":
+        job_config = bq.LoadJobConfig(write_disposition="WRITE_APPEND", autodetect=True)
+        job = client.load_table_from_dataframe(df, table_id, job_config=job_config)
+        job.result()
+        print(f"Appended {len(df)} rows to {table_id}.")
+        return
+
+    # case for burning everything down and starting again when you realize you've been uploadign market cap to price and vice versa
+    if mode == "replace":
+        job_config = bq.LoadJobConfig(write_disposition="WRITE_TRUNCATE", autodetect=True)
+        job = client.load_table_from_dataframe(df, table_id, job_config=job_config)
+        job.result()
+        print(f"Replaced data in {table_id} with {len(df)} rows.")
+        return
+
+    # the likely case for cumulative data collection to avoid duplicates
+    if mode == "merge":
+        if not merge_keys:
+            raise ValueError("Merge key must be provided for merge mode")
+
+        temp_table_id = table_id + "_temp"
+        job = client.load_table_from_dataframe(df, temp_table_id, job_config=bq.LoadJobConfig(
+            write_disposition="WRITE_TRUNCATE", autodetect=True
+        ))
+        job.result()
+
+        project_id, dataset_id, table_name = table_id.split(".")
+
+        on_clause = " AND ".join([f"T.{k} = S.{k}" for k in merge_keys])
+
+        # formatted query string to merge the temp table into the original table
+        merge_sql = f"""
+        MERGE `{table_id}` T
+        USING `{temp_table_id}` S
+        ON {on_clause}       
+        WHEN MATCHED THEN
+          UPDATE SET {', '.join([f'T.{col} = S.{col}' for col in df.columns if col not in merge_keys])}
+        WHEN NOT MATCHED THEN
+          INSERT ({', '.join(df.columns)}) 
+          VALUES ({', '.join(['S.' + col for col in df.columns])})
+        """
+
+        query_job = client.query(merge_sql)
+        query_job.result()
+        print(f"Merged {len(df)} rows into {table_id} on `{merge_keys}`.")
+        client.delete_table(temp_table_id, not_found_ok=True)
+```
+
+
+## To be Continued
+
+A project like this is pretty straightforward for most seasoned career data analysts and engineers.
+This project is really more a little "black pepper might be too spicy" as opposed to "level 5 thai-hot spicy noodles" that you'll see in most production environments.
+In the next part I'll walk through how I automated everything with the cloud scheduler and cloud run services to get this data uploading weekly.
 
 [Back to Home](https://joncwmusic.github.io/Data-Blog-Site/)
 
