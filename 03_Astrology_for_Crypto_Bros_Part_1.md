@@ -1,4 +1,4 @@
-# Astrology for Crypto Bros Dashboard Building (Part 1)
+# Building a Dashboard for Crypto Bros (Part 1)
 
 So, as you may know crypto currency, web 3.0, and NFTs have been circulating in the mainstream for quite a while 
 as the last hope for the everyday person to accumulate riches on the level of the wealthiest individuals in the world. 
