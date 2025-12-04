@@ -1,7 +1,7 @@
 # How to Import Data Sources Into Your Project
 
 So you've survived another round of layoffs at the big tech company and you've been cruising at the bare minimum for a while now. 
-Instead of improving your skils or working on your fundamentals, you decided to watch videos about improving your skills trying to muster the motivation to change.
+Instead of improving your skills or working on your fundamentals, you decided to watch videos about improving your skills trying to muster the motivation to change.
 
 You're doing great.
 
