@@ -1,5 +1,7 @@
 # How to Import Data Sources Into Your Project
 
+![NYEDB Image](NYRDB_Banner.png)
+
 [Home](https://joncwmusic.github.io/Data-Blog-Site/)
 
 So you've survived another round of layoffs at the big tech company and you've been cruising at the bare minimum for a while now. 
