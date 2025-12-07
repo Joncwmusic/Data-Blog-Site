@@ -1,6 +1,6 @@
 title: Not Your Employer's Data Blog
 remote_theme: "mmistakes/minimal-mistakes@4.9.0"
-banner_image: NYRDB_Banner.png
+banner: NYRDB_Banner.png
 plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
 description: A collection of projects and tutorials
