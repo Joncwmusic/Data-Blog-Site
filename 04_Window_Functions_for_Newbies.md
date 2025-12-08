@@ -15,7 +15,7 @@ You may want to try some of these queries out on some data so I've provided some
 Okay so picture this. You’ve just been tasked with finding the average price of a bunch of products by product category.
 “Simple Task.” You think to yourself. Just google how to use a GROUP BY and spit out something like this:
 
-```SQL
+```sql
 SELECT CategoryID, AVG(Price) FROM Products GROUP BY CategoryId;
 ```
 
@@ -44,7 +44,7 @@ Window functions are functions that operate over a "window" of rows. Within that
 
 Notice how in this image we see the product, price, and category. If we wanted to see the average price compared to the actual price for each product by category we would want something like this:
 
-```SQL
+```sql
 SELECT ProductName, CategoryID, Price
 	, AVG(Price) OVER (PARTITION BY CategoryID) AS AvgCategoryPrice 
 FROM Products;
@@ -77,7 +77,7 @@ In the next query you'll see total revenue by product category BUT when you add 
 
 Here's the query without the order by clause:
 
-```SQL
+```sql
 SELECT CategoryID, OrderRevenue
 	, SUM(OrderRevenue) OVER (PARTITION BY CategoryID) AS CumeRevenue
 FROM 
