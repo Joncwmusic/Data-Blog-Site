@@ -60,22 +60,6 @@ SELECT ProductName, CategoryID, Price
 FROM Products;
 ```
 
-<img width="1514" height="506" alt="image" src="https://github.com/user-attachments/assets/8cd67ecd-d8b0-40de-863c-dc704ecb5b21" />
-
-```SQL
-SELECT CategoryID, OrderRevenue
-	, SUM(OrderRevenue) OVER (PARTITION BY CategoryID) AS CumeRevenue
-FROM 
--- think of this part as a temp table/view with the relevant data you need to get category totals
-(
-SELECT o.OrderDate, p.CategoryID, SUM(d.Quantity*p.Price) AS OrderRevenue 
-FROM OrderDetails d 
-JOIN Products p ON d.productID = p.ProductID
-JOIN Orders o ON d.OrderID = o.OrderID
-GROUP BY p.CategoryID, o.OrderDate) tempview
-ORDER BY CategoryID, OrderDate
-```
-
 Notice how this time there isn’t a group by, but if we look at the output, those averages from the other query pop up.
 In fact if you order the data by product category you’ll notice the average is repeated within each category. 
 This makes it really easy to look at the spread because now you can just work in an extra column for the differences. Neato.
@@ -98,6 +82,22 @@ So let’s break this down. What we want to see is a running total.
 We can think about the window being a bit more dynamic than in the last example.
 In this case the running total is a sum over an expanding window that increments by a step with each successive row within each category you’re grouping.
 
+<img width="1514" height="506" alt="image" src="https://github.com/user-attachments/assets/8cd67ecd-d8b0-40de-863c-dc704ecb5b21" />
+
+```SQL
+SELECT CategoryID, OrderRevenue
+	, SUM(OrderRevenue) OVER (PARTITION BY CategoryID) AS CumeRevenue
+FROM 
+-- think of this part as a temp table/view with the relevant data you need to get category totals
+(
+SELECT o.OrderDate, p.CategoryID, SUM(d.Quantity*p.Price) AS OrderRevenue 
+FROM OrderDetails d 
+JOIN Products p ON d.productID = p.ProductID
+JOIN Orders o ON d.OrderID = o.OrderID
+GROUP BY p.CategoryID, o.OrderDate) tempview
+ORDER BY CategoryID, OrderDate
+```
+
 <img width="1516" height="523" alt="image" src="https://github.com/user-attachments/assets/6bc3aa5b-a363-446b-a6cf-e4ff0c0b8032" />
 
 
@@ -114,6 +114,37 @@ JOIN Orders o ON d.OrderID = o.OrderID
 GROUP BY p.CategoryID, o.OrderDate
 ) tempview  --in some sql dialects, nested queries require aliases for the inner query
 ORDER BY CategoryID, OrderDate
+```
+
+A little trick you can use to mix totals and category level reporting is to duplicate the query and union it with the less granular dimension like so:
+
+```sql
+SELECT OrderDate, CategoryID, OrderRevenue
+	, SUM(OrderRevenue) OVER (PARTITION BY CategoryID ORDER BY OrderDate) AS CumeRevenue
+FROM
+-- think of this part as a temp table/view with the relevant data you need to get a running total
+(
+SELECT o.OrderDate, p.CategoryID, SUM(d.Quantity*p.Price) AS OrderRevenue 
+FROM OrderDetails d 
+JOIN Products p ON d.productID = p.ProductID
+JOIN Orders o ON d.OrderID = o.OrderID
+GROUP BY p.CategoryID, o.OrderDate
+) tempview  --in some sql dialects, nested queries require aliases for the inner query
+
+UNION
+
+SELECT OrderDate, 99 AS CategoryID, OrderRevenue
+	, SUM(OrderRevenue) OVER (ORDER BY OrderDate) AS CumeRevenue
+FROM
+-- think of this part as a temp table/view with the relevant data you need to get a running total
+(
+SELECT o.OrderDate, p.CategoryID, SUM(d.Quantity*p.Price) AS OrderRevenue 
+FROM OrderDetails d 
+JOIN Products p ON d.productID = p.ProductID
+JOIN Orders o ON d.OrderID = o.OrderID
+GROUP BY p.CategoryID, o.OrderDate
+) tempview  --in some sql dialects, nested queries require aliases for the inner query
+ORDER BY 2, 1
 ```
 
 
