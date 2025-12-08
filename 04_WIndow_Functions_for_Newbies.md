@@ -2,6 +2,8 @@
 
 ![NYEDB Image](NYRDB_Banner.png)
 
+[Home](https://joncwmusic.github.io/Data-Blog-Site/)
+
 Okay so today, it’s all about window functions. Some of you learned `SELECT * FROM table` isn’t enough to do effective analytics.
 And now, you have to pray chatgpt knows how to translate your desire to bake a moving average into the downstream table so you can create more financially sound projections to “reduce some of the noise”
 or whatever the senior analyst said before delegating the assignment to you.
@@ -199,4 +201,6 @@ As you can see, window functions give your manager all kinds of insights to pres
 The key take away is: You've become one step closer to being a pain to replace. 
 
 And that'll do.
+
+[Back to Home](https://joncwmusic.github.io/Data-Blog-Site/)
 
