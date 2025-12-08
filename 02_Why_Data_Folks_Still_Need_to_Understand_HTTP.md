@@ -1,5 +1,7 @@
 # Why Data Scientists Still Need to Know About HTTP
 
+![NYEDB Image](NYRDB_Banner.png)
+
 Data scientists, data analysts, data engineers, and... the business analysts, still stuck in their spreadsheets *ick*, come from all kinds of backgrounds. 
 Some data scientists and engineers are former software engineers that realize they're better suited to moving numbers around than designing a functional UI. 
 Meanwhile others had a better time studying mathematics and gagged everytime they picked up a TI-83
