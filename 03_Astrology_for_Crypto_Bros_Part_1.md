@@ -1,5 +1,7 @@
 # Building a Dashboard for Crypto Bros (Part 1)
 
+![NYEDB Image](NYRDB_Banner.png)
+
 [Home](https://joncwmusic.github.io/Data-Blog-Site/)
 
 So, as you may know crypto currency, web 3.0, and NFTs have been circulating in the mainstream for quite a while 
