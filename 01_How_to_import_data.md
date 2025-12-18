@@ -9,18 +9,18 @@ Instead of improving your skills or working on your fundamentals, you decided to
 
 You're doing great.
 
-Except, you're KPIs put you in the 89th percentile of staff and the bottom 10% were just given opportunities that aren't within the company.
+Except your KPIs put you in the 89th percentile of staff and the bottom 10% were just given opportunities that aren't within the company.
 
 Ouch.
 
 Now you have to get yourself back to at least the middle of the pack so upper management doesn't catch on to how much you've been slacking.
-Your first task is to just get some preliminary data. Your boss doesn't know anything about the data on your internal servers, cloud storage, or even the data in the csvs he has saved locally.
+Your first task is to just get some preliminary data. Your boss doesn't know anything about the data on your internal servers, cloud storage, or even the data in the csv files he has saved locally.
 He thinks API means Asian/Pacific Islander because he spent 5 years in HR before becoming a tech hiring manager and eventually, your direct report.
 He now makes triple what you make, but you're still the one on the chopping block for having the least number of queries per hour on the server. Because that's a valid way to measure performance *(that was sarcasm)*
 
 ## Learning Goals
 
-The goal is simply to lay out the basic options you have to gather data so you can analyze and predict to your hearts content. That way your boss can give you high marks on your performance review that still mean absolutely nothing.
+The goal is simply to lay out the options you have to gather data so you can analyze and predict to your hearts content. That way your boss can give you high marks on your performance review that still mean absolutely nothing.
 
 You'll learn how to:
 
@@ -71,10 +71,10 @@ this code block goes to the top imdb movies and gets their titles.
 
 ### API
 
-Okay so API stands for application programming interface. It's an interface for your code to work with an application programmatically... let me explain.
-Let's say you want to upload videos to a YouTube Channel. But hitting the upload button is just too much work for your overworked fingers that have been typing out that really long reddit thread while you were distracted. You can write a program with your exhausted fingers to do that. But instead of trying to mimic the behavior of a user using a web driver, you can instead use the *Application Programming Interface* that YouTube provides to do it automagically. (If you're actually curious here's a link: [Uploading a YouTube Video via API tutorial](https://developers.google.com/youtube/v3/guides/uploading_a_video).
+API stands for application programming interface. It's an interface for your code to work with an application programmatically... let me explain.
+Let's say you want to upload videos to a YouTube Channel. But hitting the upload button is just too much work for your overworked fingers that have been typing out that really long reddit thread while you were distracted from the work you needed to get done today. With your exhausted fingers you can instead use the *Application Programming Interface* that YouTube provides to do it automagically. (If you're actually curious here's a link: [Uploading a YouTube Video via API tutorial](https://developers.google.com/youtube/v3/guides/uploading_a_video).
 
-APIs are useful for automating things but only if the application HAS an API to begin with (Ideally with public documentation). Otherwise you'll have to default to scraping the old fashioned way.
+APIs are useful for automating things but only if the application HAS an API to begin with (Ideally with public documentation). Otherwise you'll have to default to scraping and automating the old fashioned way.
 
 Let's go through this step by step:
 
@@ -119,23 +119,23 @@ Of course everything up to this point is just to get the client to request the d
 
 ### Spreadsheets
 
-If you're in this section you either work for a company worn down by the prehistoric hellscape of using excel working under a manager who says VBA is everything you need. Or you work in consulting trying to transition these dinosaurs to the modern day. Either way, you're paying the price for someone else's sin and you have to add another layer to the convoluted engineering pipeline.
+If you're in this section you either work for a company worn down by the prehistoric hellscape of using excel working under a manager who says VBA is everything you need, or you work in consulting trying to transition these dinosaurs to the modern day. Either way, you're paying the price for someone else's sin and you have to add another layer to the convoluted engineering pipeline.
 
 No matter how you got here, you can still find some programmatic ways to deal with importing your excel data into a python script so you can mangle it into something that will go into a proper database (that will once again be exported into an excel document to make a chart to go into a powerpoint).
 
 Let's get into our example:
 
-Suppose you have an excel file "WorkHours.csv" and you wanna use this excel document to prove to your manager you're being underpaid for all the billable time you're putting in.
+Suppose you have a file "WorkHours.xlsx" and you wanna use this document to prove to your manager you're being underpaid for all the billable time you're putting in. Ideally you want to check the document and see if you can get rid of all the pretty formatting and just make it a csv. If you can, you can use the following work template to get your excel sheet into a dataframe. Otherwise pandas does have read excel and google sheets functions to get the data that way. You'd be surprised how many data pipelines hinge on having the same csv export from a critical data source. Image just one column change ruining all of your data infrastructure and having to fix that... on a friday afternoon DUN DUN DUN!.
 
 ```python
 # Python Code
 import pandas as pd
 
 # Load a CSV file
-csv_df = pd.read_csv("path/to/your_file.csv")
+csv_df = pd.read_csv("path/to/WorkHours.csv")
 
 # Load an Excel file (first sheet by default)
-excel_df = pd.read_excel("path/to/your_file.xlsx")
+excel_df = pd.read_excel("path/to/WorkHours.xlsx")
 
 # Load a public Google Sheet
 sheet_url = "https://docs.google.com/spreadsheets/d/your_sheet_id_here/export?format=csv"
@@ -150,9 +150,9 @@ print("Google Sheet Data:\n", gsheet_df.head())
 
 ### Query from a Database
 
-Okay so this requires you actually have a database with data. You can store a small bit of data locally but for larger enterprise datasets with hundreds, if not thousands, of tables those will typically be stored in external servers or cloud environments. This means you'll have to pay attention to your cloud tutorials and do a lot of googling to connect your python script to the databse which may involve communicating with your db admin... I'm sure he's a fun guy.
+This requires you actually have a database with data. You can store a small bit of data locally but for larger enterprise datasets with hundreds, if not thousands, of tables those will typically be stored in external servers or cloud environments. This means you'll have to pay attention to your cloud tutorials and do a lot of googling to connect your python script to the databse which may involve communicating with your db admin... I'm sure he's a fun guy.
 
-The basic process is two steps: Connect, then query. You'll generally have to send a query string concatenated with a whole load of parameters to get what you want into your precious pandas dataframe. And the code will typically look something like this.
+The basic process is two steps: Connect, then query. You'll generally have to send a query string concatenated with a whole load of parameters to get what you want into your precious pandas dataframe. And the code will typically look something like this. Best practice says you could also close the connection but let's not overwhelm you with all this databse stuff Mr. or Ms. Analyst.
 
 ```python
 # Python Code
@@ -169,7 +169,7 @@ df.head()
 ```
 
 ### Google Cloud
-You could use any cloud service to get data but the one I'm personally most familiar with is google's cloud services and particularly bigquery. This is virtually the same as querying from a database with the key difference being that the database is hosted on a cloud server instead of locally.
+You could use any cloud service to get data but the one I'm personally most familiar with is google's cloud services and particularly bigquery. This is virtually the same as querying from a onsite database with the key difference being that the database is hosted in the maze of server space that google has set up all over the world. Python just happens to be nice enough to have a community full of socially deprived contributors that there's already google cloud libraries for accessing any of your cloud infrastructure as long as you give your script/repository the right permissions to access those resources. That can be really complicated especially if you're trying to convince the Cloud Admin you have to get access to your entire impressions table to run a python script that you vibe coded to delete everything in a panic (This actually happened).
 
 ```python
 #Python Code
